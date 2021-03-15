@@ -20,6 +20,7 @@ const {
 	SET_ORDER_ID,
 	SET_SHOULD_CREATE_ACCOUNT,
 	SET_ORDER_NOTES,
+	SET_TERMS_AND_CONDITIONS,
 } = TYPES;
 
 /**
@@ -78,5 +79,9 @@ export const actions = {
 	setOrderNotes: ( orderNotes ) => ( {
 		type: SET_ORDER_NOTES,
 		orderNotes,
+	} ),
+	setTermsAndConditions: ( termsAndConditions ) => ( {
+		type: SET_ORDER_NOTES,
+		termsAndConditions,
 	} ),
 };

@@ -48,6 +48,7 @@ const BlockSettings = ( { attributes, setAttributes } ) => {
 		requirePhoneField,
 		allowCreateAccount,
 		showOrderNotes,
+		showTermsAndConditions,
 		showPolicyLinks,
 		showReturnToCart,
 		cartPageId,
@@ -202,6 +203,28 @@ const BlockSettings = ( { attributes, setAttributes } ) => {
 					onChange={ () =>
 						setAttributes( {
 							showOrderNotes: ! showOrderNotes,
+						} )
+					}
+				/>
+			</PanelBody>
+			<PanelBody
+				title={ __( 'Terms and Conditions', 'woo-gutenberg-products-block' ) }
+			>
+				<p className="wc-block-checkout__controls-text">
+					{ __(
+						'Legal options.',
+						'woo-gutenberg-products-block'
+					) }
+				</p>
+				<ToggleControl
+					label={ __(
+						'Allow shoppers to accept terms and conditions',
+						'woo-gutenberg-products-block'
+					) }
+					checked={ showTermsAndConditions }
+					onChange={ () =>
+						setAttributes( {
+							showTermsAndConditions: ! showTermsAndConditions,
 						} )
 					}
 				/>

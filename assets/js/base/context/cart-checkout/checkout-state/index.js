@@ -49,6 +49,7 @@ const CheckoutContext = createContext( {
 	redirectUrl: '',
 	orderId: 0,
 	orderNotes: '',
+	termsAndConditions: false,
 	customerId: 0,
 	onSubmit: () => void null,
 	onCheckoutAfterProcessingWithSuccess: ( callback ) => void callback,
@@ -64,6 +65,7 @@ const CheckoutContext = createContext( {
 		setCustomerId: ( id ) => void id,
 		setOrderId: ( id ) => void id,
 		setOrderNotes: ( orderNotes ) => void orderNotes,
+		setTermsAndConditions: ( termsAndConditions ) => void termsAndConditions,
 	},
 	hasOrder: false,
 	isCart: false,
@@ -155,6 +157,8 @@ export const CheckoutStateProvider = ( {
 				void dispatch( actions.setOrderId( orderId ) ),
 			setOrderNotes: ( orderNotes ) =>
 				void dispatch( actions.setOrderNotes( orderNotes ) ),
+			setTermsAndConditions: ( termsAndConditions ) =>
+				void dispatch( actions.setTermsAndConditions( termsAndConditions ) ),
 			setAfterProcessing: ( response ) => {
 				// capture general error message if this is an error response.
 				if (
@@ -375,6 +379,7 @@ export const CheckoutStateProvider = ( {
 		hasOrder: !! checkoutState.orderId,
 		customerId: checkoutState.customerId,
 		orderNotes: checkoutState.orderNotes,
+		termsAndConditions: checkoutState.termsAndConditions,
 		shouldCreateAccount: checkoutState.shouldCreateAccount,
 		setShouldCreateAccount: ( value ) =>
 			dispatch( actions.setShouldCreateAccount( value ) ),

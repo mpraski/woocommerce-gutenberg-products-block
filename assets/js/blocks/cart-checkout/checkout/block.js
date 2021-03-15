@@ -33,7 +33,7 @@ import { isWcVersion, getSetting } from '@woocommerce/settings';
  */
 import CheckoutForm from './form';
 import CheckoutSidebar from './sidebar';
-import CheckoutOrderError from './checkout-order-error';
+import CheckoutOrderError from './form/checkout-order-error';
 import { CheckoutExpressPayment } from '../payment-methods';
 import { LOGIN_TO_CHECKOUT_URL } from './utils';
 import './style.scss';
@@ -135,6 +135,7 @@ const Checkout = ( { attributes, scrollToTop } ) => {
 						showApartmentField={ attributes.showApartmentField }
 						showCompanyField={ attributes.showCompanyField }
 						showOrderNotes={ attributes.showOrderNotes }
+						showTermsAndConditions={ attributes.showTermsAndConditions }
 						showPhoneField={ attributes.showPhoneField }
 						requireCompanyField={ attributes.requireCompanyField }
 						requirePhoneField={ attributes.requirePhoneField }

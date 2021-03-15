@@ -27,6 +27,7 @@ export const DEFAULT_STATE = {
 	calculatingCount: 0,
 	orderId: checkoutData.order_id,
 	orderNotes: '',
+	termsAndConditions: false,
 	customerId: checkoutData.customer_id,
 	shouldCreateAccount: false,
 	processingResponse: null,
@@ -46,6 +47,7 @@ export const TYPES = {
 	SET_CUSTOMER_ID: 'set_checkout_customer_id',
 	SET_ORDER_ID: 'set_checkout_order_id',
 	SET_ORDER_NOTES: 'set_checkout_order_notes',
+	SET_TERMS_AND_CONDITIONS: 'set_checkout_terms_and_conditions',
 	INCREMENT_CALCULATING: 'increment_calculating',
 	DECREMENT_CALCULATING: 'decrement_calculating',
 };

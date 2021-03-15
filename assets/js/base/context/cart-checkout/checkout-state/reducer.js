@@ -24,6 +24,7 @@ const {
 	SET_CUSTOMER_ID,
 	SET_ORDER_ID,
 	SET_ORDER_NOTES,
+	SET_TERMS_AND_CONDITIONS,
 	SET_SHOULD_CREATE_ACCOUNT,
 } = TYPES;
 
@@ -52,16 +53,16 @@ const {
  *
  * @return {Object} A new object with 'paymentStatus', and 'paymentDetails' as the properties.
  */
-export const prepareResponseData = ( data ) => {
+export const prepareResponseData = (data) => {
 	const responseData = {
 		message: data?.message || '',
 		paymentStatus: data.payment_status,
 		paymentDetails: {},
 	};
-	if ( Array.isArray( data.payment_details ) ) {
-		data.payment_details.forEach( ( { key, value } ) => {
-			responseData.paymentDetails[ key ] = decodeEntities( value );
-		} );
+	if (Array.isArray(data.payment_details)) {
+		data.payment_details.forEach(({ key, value }) => {
+			responseData.paymentDetails[key] = decodeEntities(value);
+		});
 	}
 	return responseData;
 };
@@ -76,15 +77,16 @@ export const prepareResponseData = ( data ) => {
  * @param {string} action.customerId Customer ID.
  * @param {string} action.orderId Order ID.
  * @param {Array} action.orderNotes Order notes.
+ * @param {boolean} action.termsAndConditions True if shopper has accepted terms and conditions.
  * @param {boolean} action.shouldCreateAccount True if shopper has requested a user account (signup checkbox).
  * @param {Object} action.data Other action payload.
  */
 export const reducer = (
 	state = DEFAULT_STATE,
-	{ url, type, customerId, orderId, orderNotes, shouldCreateAccount, data }
+	{ url, type, customerId, orderId, orderNotes, termsAndConditions, shouldCreateAccount, data }
 ) => {
 	let newState = state;
-	switch ( type ) {
+	switch (type) {
 		case SET_PRISTINE:
 			newState = DEFAULT_STATE;
 			break;
@@ -92,18 +94,18 @@ export const reducer = (
 			newState =
 				state.status !== IDLE
 					? {
-							...state,
-							status: IDLE,
-					  }
+						...state,
+						status: IDLE,
+					}
 					: state;
 			break;
 		case SET_REDIRECT_URL:
 			newState =
 				url !== state.url
 					? {
-							...state,
-							redirectUrl: url,
-					  }
+						...state,
+						redirectUrl: url,
+					}
 					: state;
 			break;
 		case SET_PROCESSING_RESPONSE:
@@ -117,20 +119,20 @@ export const reducer = (
 			newState =
 				state.status !== COMPLETE
 					? {
-							...state,
-							status: COMPLETE,
-							redirectUrl: data?.redirectUrl || state.redirectUrl,
-					  }
+						...state,
+						status: COMPLETE,
+						redirectUrl: data?.redirectUrl || state.redirectUrl,
+					}
 					: state;
 			break;
 		case SET_PROCESSING:
 			newState =
 				state.status !== PROCESSING
 					? {
-							...state,
-							status: PROCESSING,
-							hasError: false,
-					  }
+						...state,
+						status: PROCESSING,
+						hasError: false,
+					}
 					: state;
 			// clear any error state.
 			newState =
@@ -142,43 +144,43 @@ export const reducer = (
 			newState =
 				state.status !== BEFORE_PROCESSING
 					? {
-							...state,
-							status: BEFORE_PROCESSING,
-							hasError: false,
-					  }
+						...state,
+						status: BEFORE_PROCESSING,
+						hasError: false,
+					}
 					: state;
 			break;
 		case SET_AFTER_PROCESSING:
 			newState =
 				state.status !== AFTER_PROCESSING
 					? {
-							...state,
-							status: AFTER_PROCESSING,
-					  }
+						...state,
+						status: AFTER_PROCESSING,
+					}
 					: state;
 			break;
 		case SET_HAS_ERROR:
 			newState = state.hasError
 				? state
 				: {
-						...state,
-						hasError: true,
-				  };
+					...state,
+					hasError: true,
+				};
 			newState =
 				state.status === PROCESSING ||
-				state.status === BEFORE_PROCESSING
+					state.status === BEFORE_PROCESSING
 					? {
-							...newState,
-							status: IDLE,
-					  }
+						...newState,
+						status: IDLE,
+					}
 					: newState;
 			break;
 		case SET_NO_ERROR:
 			newState = state.hasError
 				? {
-						...state,
-						hasError: false,
-				  }
+					...state,
+					hasError: false,
+				}
 				: state;
 			break;
 		case INCREMENT_CALCULATING:
@@ -190,7 +192,7 @@ export const reducer = (
 		case DECREMENT_CALCULATING:
 			newState = {
 				...state,
-				calculatingCount: Math.max( 0, state.calculatingCount - 1 ),
+				calculatingCount: Math.max(0, state.calculatingCount - 1),
 			};
 			break;
 		case SET_CUSTOMER_ID:
@@ -206,7 +208,7 @@ export const reducer = (
 			};
 			break;
 		case SET_SHOULD_CREATE_ACCOUNT:
-			if ( shouldCreateAccount !== state.shouldCreateAccount ) {
+			if (shouldCreateAccount !== state.shouldCreateAccount) {
 				newState = {
 					...state,
 					shouldCreateAccount,
@@ -214,10 +216,17 @@ export const reducer = (
 			}
 			break;
 		case SET_ORDER_NOTES:
-			if ( state.orderNotes !== orderNotes ) {
+			if (state.orderNotes !== orderNotes) {
 				newState = {
 					...state,
 					orderNotes,
+				};
+			}
+		case SET_TERMS_AND_CONDITIONS:
+			if (state.termsAndConditions !== termsAndConditions) {
+				newState = {
+					...state,
+					termsAndConditions,
 				};
 			}
 			break;

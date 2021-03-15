@@ -37,6 +37,10 @@ const blockAttributes = {
 		type: 'boolean',
 		default: true,
 	},
+	showTermsAndConditions: {
+		type: 'boolean',
+		default: true,
+	},
 	showPolicyLinks: {
 		type: 'boolean',
 		default: true,
